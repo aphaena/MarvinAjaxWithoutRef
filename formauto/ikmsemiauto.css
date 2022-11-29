@@ -1,0 +1,120 @@
+@charset "utf-8";
+/* CSS Document */
+#textboxsearchform{
+height:10px;
+}
+
+#semiauto {
+position:absolute;
+margin:1px;
+padding:2px;
+top:40px;
+left:17px;
+width:300px;
+}
+
+#textboxsearch{
+width:500px;
+}
+
+#google {
+position:absolute;
+top:100px;
+margin:5px;
+padding:5px;
+z-index:-1;
+}
+
+#googlepreview {
+top:1000px;
+position:absolute;
+border:1px solid #666666;
+float:left;
+width:350px;
+margin:5px;
+padding:5px;
+background-color:#FFFFFF;
+z-index:5005;
+
+border-radius: 2px 2px 2px 2px;
+  -moz-border-radius: 2px 2px 2px 2px;
+  -webkit-border-radius: 2px 2px 2px 2px;
+  -webkit-border-top-left-radius: 2px; /* pour Chrome */ 
+  -webkit-border-top-right-radius: 2px; /* pour Chrome */
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:10px;
+}
+
+.padding10 {
+	font-size:16px;
+	font-weight:bold;
+	padding:0px 10px 0px 10px;
+}
+
+.cadresemiauto {
+z-index:5001;
+display:table;
+width:auto;
+margin:1px;
+padding:2px;
+/*border:1px solid #666666;*/
+background-color:;
+
+border-radius: 2px 2px 2px 2px;
+  -moz-border-radius: 2px 2px 2px 2px;
+  -webkit-border-radius: 2px 2px 2px 2px;
+  -webkit-border-top-left-radius: 2px; /* pour Chrome */ 
+  -webkit-border-top-right-radius: 2px; /* pour Chrome */
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:10px;
+}
+
+.cadresemiauto02 {
+/*position:relative;*/
+z-index:5002;
+float:left;
+margin:1px;
+
+padding:1px;
+border:1px solid #AAAAAA;
+background-color:#FEFEFE;
+border-radius: 2px 2px 2px 2px;
+  -moz-border-radius: 2px 2px 2px 2px;
+  -webkit-border-radius: 2px 2px 2px 2px;
+  -webkit-border-top-left-radius: 2px; /* pour Chrome */ 
+  -webkit-border-top-right-radius: 2px; /* pour Chrome */
+
+}
+
+.words {
+display:block;
+width:auto;
+margin:1px;
+padding:2px;
+border:1px solid #DDDDDD;
+background-color:#FFFFFF;
+border-radius: 2px 2px 2px 2px;
+  -moz-border-radius: 2px 2px 2px 2px;
+  -webkit-border-radius: 2px 2px 2px 2px;
+  -webkit-border-top-left-radius: 2px; /* pour Chrome */ 
+  -webkit-border-top-right-radius: 2px; /* pour Chrome */
+
+}
+.wordeye {border:2px solid #DDDDDD;}
+.wordeye:hover {border:2px solid #FFAA00;}
+
+.words:hover {
+background-color:#FFFFFF;
+font-size:12px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.bold {
+font-weight:bold;
+}
+
+
+.displayOn{
+display:block;
+}

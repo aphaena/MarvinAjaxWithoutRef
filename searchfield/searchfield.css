@@ -1,0 +1,83 @@
+/* 
+
+	SearchField	
+	by Alen Grakalic, brought to you by cssglobe.com
+	
+*/
+.sf_size {
+	width:250px;
+}
+/* default (inactive field) */
+.sf_inactive{
+	border:2px #aaaaaa solid;
+	background:#fdfdfd;
+	color:#b4d3db;
+}
+/* on focus (when field is clicked on)  */
+.sf_active{
+	border:2px #bbbbbb solid;
+	background:#fff;
+	color:#333;
+}
+/* with text (when field is inactive but contains user's input)  */
+.sf_text{
+	border:2px #3c90a5 solid;
+	background:#eeeeee;
+	color:#888;
+}
+
+a:link { text-decoration:none; }
+/* suggestions box */
+/* js code generates unordered list */
+.sf_suggestion{	
+	max-width:200px;
+	position:relative;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:16px;
+	font-style:normal;
+	/*text-decoration:underline;*/
+
+}
+.sf_suggestion ul{
+	position:absolute;
+	border:1px #aaa solid;
+	margin:0;
+	padding-left:5px;
+	padding-right::5px;
+	padding-top:0px;
+	padding-bottom:5px;
+	background:#F8F8F8;
+	top:0;
+	left:0;
+}
+.sf_suggestion li{
+	
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+.sf_suggestion li a{
+	display:block;
+	text-indent:5px;
+	color:#111111;
+
+}
+.sf_suggestion li.selected a{
+	
+	color:white;
+	background:#2fb4ed;
+background-image: linear-gradient(bottom, #85DAFF 16%, #B8EAFF 79%);
+background-image: -o-linear-gradient(bottom, #85DAFF 16%, #B8EAFF 79%);
+background-image: -moz-linear-gradient(bottom, #85DAFF 16%, #B8EAFF 79%);
+background-image: -webkit-linear-gradient(bottom, #85DAFF 16%, #B8EAFF 79%);
+background-image: -ms-linear-gradient(bottom, #85DAFF 16%, #B8EAFF 79%);
+
+background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.16, #85DAFF),
+	color-stop(0.79, #B8EAFF)
+);
+	
+}
