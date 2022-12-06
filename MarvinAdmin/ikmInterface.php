@@ -5,31 +5,42 @@ class ikmInterface {
 				
 	 public $ikm;
 	 public $session;
-	 
+
+	private $knw;
+
+	private string $ip_connect_default;
+	private string $port_connect_default;
+
+	private string $knw_connect_default ;
 	
 	function __construct() 
 	{
 		$this->ikm = new KMServer;
+		$this->ip_connect_default  = "127.0.0.1";
+		$this->port_connect_default = "1254";
+		$this->knw_connect_default = "knw";
+
+
 	}
 	
 	public function connectdefault() 
 	{
 		echo "connecting...";
-		$this->connect($ip_connect_default,"1254");
-		$this->knowledge("wikiknw");	
+		$this->connect($this->ip_connect_default, $this->port_connect_default);
+		$this->knowledge($this->knw_connect_default);	
 		$this->KMId();
 	}
 	
 	/**
 	 * 
 	 * @param string $_ip ex: "127.0.0.1"
-	 * @param unknown_type $_port ex: 1254
-	 * @return A valid sessionId, and a possible challenge for password identification
+	 * @param string  $_port ex: 1254
+	 * @return string valid sessionId, and a possible challenge for password identification
 	 * @see -1 CONNECT ( null ) ;
 	 * returns
 	 * 623 1 1 1 8 0 CHALLENGE <0 \>
 	 * 623  is the new valid session Id
-	 * password  é rights checking is presently unactivated
+	 * password  ï¿½ rights checking is presently unactivated
 	 */
 	public function connect($_ip, $_port)
 	{
@@ -51,7 +62,7 @@ class ikmInterface {
 	/**
 	 * KMServer Set Ip
 	 * @param string $_ip
-	 * @return unknown_type
+	 * @return string
 	 */
 	public function  KMServerSetIp($_ip="127.0.0.1")
 	{
@@ -70,7 +81,7 @@ class ikmInterface {
 	/**
 	 * KMServer Set Port 
 	 * @param string Port ex "1254"
-	 * @return unknown_type
+	 * @return string Port
 	 */
 	public function  KMServerSetPort($_port="1254")
 	{
@@ -89,7 +100,7 @@ class ikmInterface {
 	/**
 	 * KMServer Set Sock 
 	 * @param string Port 
-	 * @return unknown_type
+	 * @return string
 	 */
 	public function  KMServerSetSock($_Sock)
 	{
@@ -195,7 +206,7 @@ class ikmInterface {
 	/**
 	 * Data received from the server
 	 * return Received
-	 * @return string Received
+	 * @return array Received
 	 */
 	public function KMServerGetReceived()
 	{
@@ -205,7 +216,7 @@ class ikmInterface {
 	/**
 	 * KM session Id array
 	 * return KMSessions
-	 * @return string KMSessions
+	 * @return array KMSessions
 	 */
 	public function KMServerGetKMSessions()
 	{
@@ -250,7 +261,7 @@ class ikmInterface {
 	 */
 	public function KMServerGetKMErrorMsg()
 	{
-			return $this->ikm->$KMErrorMsg;
+			return $this->ikm->KMErrorMsg;
 	}	
 	
 	/**
@@ -287,7 +298,7 @@ class ikmInterface {
 	
 	/**
 	 * 
-	 * @return Array
+	 * @return bool
 	 */	
 	public function serverSetName($_Name)
 	{
@@ -371,7 +382,7 @@ class ikmInterface {
 	}
 	/**
 	 * HH:MM:SS:ms  ex:  17:11:26:890
-	 * @return string
+	 * @return array<array>
 	 */
 	public function serverGetCommandLocalDate()
 	{
@@ -380,7 +391,7 @@ class ikmInterface {
 	}
 	/**
 	 * In seconds ex : 395426.44090625
-	 * @return string
+	 * @return array<array>
 	 */
 	public function serverGetCommandGMTTime()
 	{
@@ -485,7 +496,7 @@ class ikmInterface {
 /**
  * SERVER.SET SessionTimeOutDefault
  * @param string $_SessionTimeOutDefault
- * @return string
+ * @return array<array>
  */	
 	public function serverSetSessionTimeOutDefault($_SessionTimeOutDefault)
 	{
@@ -516,7 +527,7 @@ class ikmInterface {
 
 	/**
 	 * 
-	 * @return string
+	 * @return array<array>
 	 */
 	public function sessionGetLastTime()
 	{
@@ -525,7 +536,7 @@ class ikmInterface {
 	}
 	/**
 	 * 
-	 * @return string
+	 * @return array<array>
 	 */
 	public function sessionGetId()
 	{
@@ -535,7 +546,7 @@ class ikmInterface {
 	
 	/**
 	 * 
-	 * @return string
+	 * @return array
 	 */
 	public function sessionGetKnowledge()
 	{
@@ -555,7 +566,7 @@ class ikmInterface {
 
 	/**
 	 * 
-	 * @return string
+	 * @return array<array>
 	 */
 	public function sessionGetOwnerIP()
 	{
@@ -565,7 +576,7 @@ class ikmInterface {
 	
 	/**
 	 * 
-	 * @return string
+	 * @return array<array>
 	 */
 	public function sessionGetOwnerPort()
 	{
@@ -576,7 +587,7 @@ class ikmInterface {
 
 	/**
 	 * 
-	 * @return string
+	 * @return array<array>
 	 */
 	public function sessionGetPriority()
 	{
@@ -592,7 +603,7 @@ class ikmInterface {
 
 	/**
 	 * 
-	 * @return string
+	 * @return array<array>
 	 */
 	public function sessionGetExecTimeOut()
 	{
@@ -608,7 +619,7 @@ class ikmInterface {
 
 	/**
 	 * 
-	 * @return string
+	 * @return array<array>
 	 */
 	public function sessionGetSessionTimeOut()
 	{
@@ -616,7 +627,7 @@ class ikmInterface {
 		 return $this->ikm->KMResults;
 	}	
 	
-	public function sessionSetSessionTimeOut($_ExecTimeOut)
+	public function sessionSetSessionTimeOut($_SessionTimeOut)
 	{
 		  $this->ikm->Execute ($this->session, 'SESSION.SET','SessionTimeOut',$_SessionTimeOut);
 		  return $this->ikm->KMResults;		
@@ -681,7 +692,7 @@ class ikmInterface {
 	}	
 	
 	/**
-	 * @param $_PropertyAdd ex "toto"
+	 * @param $_PropertyAdd  "toto"
 	 * @param string $_PropertyAdd
 	 * 
 	 */
@@ -698,7 +709,7 @@ class ikmInterface {
 	
 	public function sessionPropertySet($_PropertyName, $_PropertyValue)
 	{
-		 $this->ikm->Execute ($this->session, 'SESSION.PropertySet',$_PropertyName, $_Propertyvalue);		 		 		 
+		 $this->ikm->Execute ($this->session, 'SESSION.PropertySet',$_PropertyName, $_PropertyValue);		 		 		 
 	}		
 
 	public function sessionPropertyGet($_PropertyName)
@@ -862,7 +873,7 @@ class ikmInterface {
 	 * saves the neural net to the disk.
 	 * @see Warning,  indexation operations,  PUBLISH ( ),  CLEAR ( ),  REBUILD ( ), usually does not save the knowledge
 	 * after an indexation session,  if new sem links have  been learned,  a SAVE () must be issued in order to make this new knowledge persistant.
-	 * @return unknown_type
+	 *
 	 */
 	public function knowledgeSave()
 	{
@@ -941,7 +952,7 @@ class ikmInterface {
 	 * @param $_threshold
 	 * @param $_actMin
 	 * @param $_actMax
-	 * @return unknown_type
+	 * 
 	 */
 	public function knowledgeLearn($_text,$_KeyOrigin,$_DBId,$_RefOrigin, $_mode, $_threshold, $_actMin, $_actMax)
 	{
@@ -966,7 +977,7 @@ class ikmInterface {
 	 * <18 0.0107888584191838/> <4 6405/>  ;
 	 * 'queen'  is referenced by 6405 neural connections (dendritis) in the neural net
 	 * @param string $_pattern ex: "queen"
-	 * @return unknown_type
+	 * @return array<array>
 	 */
 	public function knowledgeKeyGen($_pattern)
 	{
@@ -997,7 +1008,7 @@ class ikmInterface {
 	 * return session id
 	 */
 	public function getSession(){
-		return $session; 
+		return $this->session; 
 	}
 	
 	
@@ -1049,7 +1060,7 @@ class ikmInterface {
 	 * Adds the known  shapes of the text to the top context.  There is no learning with that function
 	 * @param $_mysearch
 	 * @param {$_activity] default 100 
-	 * @return array stack count
+	 * @return bool stack count
 	 * @see <textual data>, [<activity>]
 	 */
 	public function contextAddElement($_mysearch, $_activity="100" ) // $_activity -1 100
@@ -1241,7 +1252,7 @@ class ikmInterface {
 	 * return:context activity> 
 	 * the global activity of the top context after a treatment.
 	 *  It is the mean value of all the activities of its contituing atoms (shapes)
-	 *  @return context Activity
+	 *  @return bool Activity
 	 *  Ex:
 	 *  5 contexts.getact (  ) 
 	 *  5 1 1 1 1 0 Act <2 -1/> ;
@@ -1256,7 +1267,7 @@ class ikmInterface {
 	public function contextGetAct()
 	{
 		$contextActivity = $this->ikm->Execute ($this->session , 'CONTEXTS.GETACT');
-		return$contextActivity; 
+		return $contextActivity; 
 	}	
 	
 	
@@ -1498,7 +1509,7 @@ class ikmInterface {
 	 * 
 	 * @param $_actThreshold (
 	 * @param $_maxResult
-	 * @return Array <stack count>, <# of elements of the top context>
+	 * @return bool <stack count>, <# of elements of the top context>
 	 */
 	public function contextNewFromSemAttractor($_actThreshold="1", $_maxResult="100")
 	{
@@ -1510,8 +1521,8 @@ class ikmInterface {
 	 * same as NewFromShape except that the results are restricted to atoms having a link with at least one atom of the top context
 	 * 
 	 * @param string $_actThreshold (1-100)
-	 * @param string_type $_maxResult (1-100)
-	 * @return array
+	 * @param string $_maxResult (1-100)
+	 * @return bool
 	 */
 	public function contextNewFromSemShape($_actThreshold="1", $_maxResult="100")
 	{
@@ -1523,8 +1534,8 @@ class ikmInterface {
 	 * splits shapes  of the atoms of the top context into their own atoms. Aggregates will be splited into their components.
 	 *  The result is stored in a new context on top of the stack. The parameter context remains
 	 * @param string $_actThreshold
-	 * @param string_type $_maxResult
-	 * @return array
+	 * @param string $_maxResult
+	 * @return bool
 	 */
 	public function contextNewFromSubAttractor($_actThreshold="1", $_maxResult="100")
 	{
@@ -1537,7 +1548,7 @@ class ikmInterface {
 	 * NewFromSemSubAttractor same as NewFromSubCategory except that the results are restricted to atoms having a link with at least one atom of the top context
 	 * @param string $_actThreshold
 	 * @param string $_maxResult
-	 * @return array
+	 * @return bool
 	 */	
 	public function contextNewFromSemSubAttractor($_actThreshold="0", $_maxResult="-1")
 	{
@@ -1554,7 +1565,7 @@ class ikmInterface {
 	 * @param string $_evaluation
 	 * @param string $_actThreshold
 	 * @param string $_maxResult
-	 * @return array
+	 * @return bool
 	 */
 	
 	public function contextPartition($_context="2",$_evaluation="false",$_actThreshold="1", $_maxResult="-1")
@@ -1567,7 +1578,7 @@ class ikmInterface {
 	 * Evaluate propagation routine in the neural net   
 	 * The top context will be evaluated according to its atoms : The result is sorted by activity 
 	 * Major routine
-	 * @return array 
+	 * @return bool 
 	 */
 	public function contextEvaluate()
 	{
@@ -1578,7 +1589,7 @@ class ikmInterface {
 	/**
 	 * for indexation only : If indexation has occurred,  the top context will generate a new result set on the RESULTS object stack.
 	 * @param string $_modeflag false or true default true
-	 * @return ARRAY
+	 * @return bool
 	 */
 	public function contextToResults($_modeflag="true")
 	{
@@ -1590,7 +1601,7 @@ class ikmInterface {
 	 * Pushes the top context to the context  stack of the  session described by the 'session Id' parameter 
 	 * The owner IP of both sessions must be the same.
 	 * @param string $_SessionId
-	 * @return array
+	 * @return bool
 	 */
 	public function contextPush($_SessionId)
 	{
@@ -1891,7 +1902,7 @@ class ikmInterface {
 	/**
 	 * 
 	 * @param string $_mode "absolute" "relative"
-	 * @return unknown_type
+	 * @return bool
 	 */
 	public function resultsNormalize($_mode="absolute")
 	{
@@ -1955,7 +1966,7 @@ class ikmInterface {
 	}		
 	// TABLE Methods xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
    public function tableCreate($_tableName , $_linkedKnw, $_param1="", $_param2="", 
-                                        $_type="MASTER", $_field="id INT64 , title STRING , texte STRING , type STRING") 
+                                        $_type="MASTER", $_field="id INT64 , title STRING , text STRING , type STRING") 
   { 
     $this->ikm->Execute ($this->session , 'TABLE.CREATE',$_tableName, $_linkedKnw, $_param1, $_param2, $_type , $_field);   
     return $this->ikm->KMResults;              
@@ -1980,13 +1991,13 @@ class ikmInterface {
 	 */
 	public function tableDelete($_datas,$_table="myMasterTable")
 	{
-		$this->ikm->Execute ($this->session , 'TABLE:'.$_table.'.Delete',$_data);	
+		$this->ikm->Execute ($this->session , 'TABLE:'.$_table.'.Delete',$_datas);	
 		return $this->ikm->KMResults;	  		  	 
 	}	
 	/**
 	 * 
 	 * @param string $_datas ex:  
-	 * @return Array KMResults
+	 * @return mixed KMResults
 	 */
 	
 	public function tableUpdate($_rowId,$_data,$_table="myMasterTable")
@@ -2031,7 +2042,7 @@ class ikmInterface {
 	 * 
 	 * @param string $_data ex: "medid,1235, title,titre1,abtract,qsd qsd qsdq sdqsdqsd,type,med" 
 	 * @param string $_table
-	 * @return Array KMResults
+	 * @return mixed KMResults
 	 */
 	public function tableInsert( $_data, $_table="myMasterTable" )
 	{		
@@ -2094,10 +2105,10 @@ class ikmInterface {
  * <3 100/> <3 Eve/> <3 100/> <3 Men/> <3 100/> <11 destruction/> <3 100/> <1 X/>
  *  <3 100/> <8 longshot/> <2 95/> <6 xavier/> <2 89/> <7 dazzler/> <2 85/> <7 magneto/> 
  *  <2 83/> <5 tells/> <2 82/> <7 cargill/> <2 78/> <8 plotline/> <2 78/> <9 inability/> <2 76/>  ;
- * @param unknown_type $_rowid
- * @param unknown_type $_threshold
- * @param unknown_type $_table
- * @return unknown_type
+ * @param string $_rowid
+ * @param string $_threshold
+ * @param string $_table
+ * @return array<array>
  */
 	public function tableReadContext($_rowid, $_threshold="", $_table="myMasterTable")
 	{
@@ -2106,10 +2117,11 @@ class ikmInterface {
 	}	
 /**
  * Creates an image of the context of a line of a master table upon the context stack of the CONTEXTS object
- * @param unknown_type $_rowid
- * @param unknown_type $_table
- * @return unknown_type
+ * @param string $_rowid
+ * @param string $_table
+ * @return array<array>
  */
+
 	public function tableToContext($_rowid, $_table="myMasterTable")
 	{
 		$this->ikm->Execute ($this->session , 'TABLE:'.$_table.'.ToContext',$_rowid);	
@@ -2118,10 +2130,10 @@ class ikmInterface {
 /**
  * Creates a Btree over a given column.
  * Optionally with an attribute unique (caution maybe bugged in this version)
- * @param unknown_type $_column
- * @param unknown_type $_unique
- * @param unknown_type $_table
- * @return unknown_type
+ * @param string $_column
+ * @param string $_unique
+ * @param string $_table
+ * @return array<array>
  */
 	public function tableBIndexCreate($_column, $_unique="", $_table="myMasterTable")
 	{

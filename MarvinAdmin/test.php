@@ -10,11 +10,13 @@
 <p>Create knowledge knwtest</p>
 <p>Create Table Master: mytable </p>
 <p>Create fields (id, title, text , link</p>
-<p><a href="http://127.0.0.1/IKM_PRJ/marvinajaxclean/MarvinAdmin/tablecreate.php?knowledge=knwtest&table=mytable&fields=id STRING , title STRING , text STRING , link STRING " target="_new">http://127.0.0.1/IKM_PRJ/marvinajaxclean/MarvinAdmin/tablecreate.php?knowledge=knwtest&table=mytable&fields=id STRING , title STRING , text STRING , link STRING </a></p>
+<p><a href="http://localhost/MarvinAjaxWithoutRef/MarvinAdmin/tablecreate.php?knowledge=knwtest&table=mytable&fields=id STRING , title STRING , text STRING , link STRING "
+
+<!-- target="_new">http://127.0.0.1/IKM_PRJ/marvinajaxclean/MarvinAdmin/tablecreate.php?knowledge=knwtest&table=mytable&fields=id STRING , title STRING , text STRING , link STRING </a></p>
 <p>&nbsp;</p>
 <p>Insert</p>
-<p><a href="http://127.0.0.1/IKM_PRJ/marvinajaxclean/MarvinAdmin/tableinsert.php?knowledge=knwtest&amp;table=mytable&amp;fielddatas=id;1235;title;le titre;text;ceci est un texte;link;http://www.marvinbot.com">http://127.0.0.1/IKM_PRJ/marvinajaxclean/MarvinAdmin/tableinsert.php?knowledge=knwtest&amp;table=mytable&amp;fielddatas=id;1235;title;le titre;text;ceci est un texte;link;http://www.marvinbot.com</a></p>
+<p><a href="http://localhost/MarvinAjaxWithoutRef/MarvinAdmin/tableinsert.php?knowledge=knwtest&amp;table=mytable&amp;fielddatas=id;1235;title;le titre;text;ceci est un texte;link;http://www.marvinbot.com">http://127.0.0.1/IKM_PRJ/marvinajaxclean/MarvinAdmin/tableinsert.php?knowledge=knwtest&amp;table=mytable&amp;fielddatas=id;1235;title;le titre;text;ceci est un texte;link;http://www.marvinbot.com</a></p>
 <p>update</p>
-<p><a href="http://127.0.0.1/IKM_PRJ/marvinajaxclean/MarvinAdmin/tableupdate.php?knowledge=knwtest&amp;table=mytable&amp;rowid=0&amp;fielddatas=id;1234;title;le titre;text;ceci est un texte update;link;http://www.marvinbot.com">http://127.0.0.1/IKM_PRJ/marvinajaxclean/MarvinAdmin/tableupdate.php?knowledge=knwtest&amp;table=mytable&amp;rowid=0&amp;fielddatas=id;1234;title;le titre;text;ceci est un texte update;link;http://www.marvinbot.com</a></p>
+<p><a href="http://localhost/MarvinAjaxWithoutRef/MarvinAdmin/tableupdate.php?knowledge=knwtest&amp;table=mytable&amp;rowid=0&amp;fielddatas=id;1234;title;le titre;text;ceci est un texte update;link;http://www.marvinbot.com">http://127.0.0.1/IKM_PRJ/marvinajaxclean/MarvinAdmin/tableupdate.php?knowledge=knwtest&amp;table=mytable&amp;rowid=0&amp;fielddatas=id;1234;title;le titre;text;ceci est un texte update;link;http://www.marvinbot.com</a></p>
 </body>
 </html>
