@@ -29,7 +29,7 @@
 // variables globales de session
 
 include "connectIKM.php";
-include_once "display.php";
+include_once "DisplayClass.php";
  session_start();
  $sikm = new searchikm();
 //$_SESSION["smarvin"]= serialize($sikm);

@@ -1,7 +1,7 @@
 <?php
-
+header('Content-Type: text/html; charset=ISO-8859-15'); 
 include_once "connectIKM.php";
-include_once "display.php";
+include_once "DisplayClass.php";
  session_start();
 $sikm = new searchikm();
 //$sikm = unserialize($_SESSION["smarvin"]);

@@ -11,16 +11,10 @@ var count = 0;
 	function fluxrss() 
 	{
 		//alert("fluxrss");
-		readrss("http://syndication.lesechos.fr/rss/rss_finance-marches.xml", "1245F");
+		
 		readrss("http://www.lemonde.fr/rss/tag/international.xml", "1249K");
 		
 		readrss("http://www.lemonde.fr/rss/une.xml", "1246G");
-		readrss("http://syndication.lesechos.fr/rss/rss_management.xml", "1240U");
-		readrss("http://syndication.lesechos.fr/rss/rss_anafi.xml", "1243D");
-		readrss("http://syndication.lesechos.fr/rss/rss_auto-transport.xml", "124HG");
-		readrss("http://www.lemonde.fr/rss/tag/mondial-de-l-automobile.xml", "124KL");
-		readrss("http://fr.news.yahoo.com/rss/europe", "124ML");
-		readrss("http://feeds.bbci.co.uk/news/video_and_audio/world/rss.xml", "124S3");
 		
 		clearInterval(myInterval);
 

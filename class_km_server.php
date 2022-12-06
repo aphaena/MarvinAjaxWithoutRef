@@ -5,27 +5,27 @@
   Classe d'interface avec un serveur KM.
   
  $arr = array("foo" => "bar", 12 => true);
- fonctionnalités , mode d'emploi prévisionnel:
+ fonctionnalitï¿½s , mode d'emploi prï¿½visionnel:
  
  $fonction = "SERVER.GET";
  $params  = array ("Connected");
  
  $serveur = new KnowledgeServer;
- $serveur->IP = "192.168.0.0";   //ou 127.0.0.1 par défaut 
- $serveur->Port =  1253;     	//1254 par défaut
+ $serveur->IP = "192.168.0.0";   //ou 127.0.0.1 par dï¿½faut 
+ $serveur->Port =  1253;     	//1254 par dï¿½faut
  $serveur->Connect();           //retourne true si ok
  
  $serveur->$KM_Open_Script();
  $serveur->AddFonction( $fonction, $params); // params est une array contenant la liste des parametre
- // autres appels de fonction éventuellement  
+ // autres appels de fonction ï¿½ventuellement  
   
  $serveur->$KM_Execute_Script();   //retourne true si ok 
  $serveur->$KM_Close_Script();
  
- le résultat est ds le tableau 
+ le rï¿½sultat est ds le tableau 
  								$serveur->$KMResults   // un tableau array
   
-    erreur d'éxécution :			$serveur->$KMerror		// contient true si ça s'est bien passé, false autrement
+    erreur d'ï¿½xï¿½cution :			$serveur->$KMerror		// contient true si ï¿½a s'est bien passï¿½, false autrement
   									$serveur->$KMerrorMsg   // contient le message d'erreur
   
   */
@@ -79,7 +79,7 @@
 		// positionne les index de recherche de mots pour encadrer le mot suivant
 		// tient compte des GPString
 		//idx1 contient la prochaine position d'analyse, ou -1 si fin de chaine 
-		// retourne la chaine située au début de l'analyse
+		// retourne la chaine situï¿½e au dï¿½but de l'analyse
 			//var_dump(self::$GetNextStringReturn);
 		self::$GetNextStringReturn = array();
 		self::$GetNextStringReturn['idx1'] = $idx1;
@@ -92,7 +92,7 @@
 			return '';			
 		}
 		
-		//on recherche le premier caractère non espace
+		//on recherche le premier caractï¿½re non espace
 		while ($str[$idx1]== ' ')
 		{
 			self::$GetNextStringReturn['idx1'] = $idx1 +=1;
@@ -101,7 +101,7 @@
 		//est ce une GPString ?
 		if ($str[$idx1]== '<')
 		{
-			// on décode la taille de la GPString
+			// on dï¿½code la taille de la GPString
 			self::$GetNextStringReturn['idx1'] = $idx1 +=1;
 			$idx2 = $idx1;
 			while ($str[$idx2]!= ' ') {$idx2 +=1;}		     
@@ -130,9 +130,9 @@
 
 
 	
-	// déclaration des propriétés
+	// dï¿½claration des propriï¿½tï¿½s
     public $IP;  //adresse IP defaut 127.0.0.1
-    public $Port; // Port défaut 1254
+    public $Port; // Port dï¿½faut 1254
     public $Sock; // La socket cliente vers le serveur KM
     public $isConnected; //connexion km
     public $isValid;      //socket IP valide
@@ -144,19 +144,19 @@
     //public $toReceive;
     
     
-    //propriétés liés à KM
-    public $KMSessions;	    	//tableau des id de connexion crées par l'objet
+    //propriï¿½tï¿½s liï¿½s ï¿½ KM
+    public $KMSessions;	    	//tableau des id de connexion crï¿½es par l'objet
     public $KMScriptSession;	//contient l'id de session pour le script
     public $KMScriptSize;		//nombre de lignes de scripts en retour
-    public $KMResults;    		//tableau des résultats
-    public $KMTransactions; 	//liste des résultats d'une transaction de plusieurs lignes
+    public $KMResults;    		//tableau des rï¿½sultats
+    public $KMTransactions; 	//liste des rï¿½sultats d'une transaction de plusieurs lignes
     
-    public $KMError ;     // booléen, retour d'erreur d'un appel de fonction KM
-    public $KMErrorMsg ;  // booléen, retour d'erreur d'un appel de fonction KM
+    public $KMError ;     // boolï¿½en, retour d'erreur d'un appel de fonction KM
+    public $KMErrorMsg ;  // boolï¿½en, retour d'erreur d'un appel de fonction KM
     public $KMId; 		  //Id de session KM de l'objet KMServer
-    public $KMCurrentId;  //Id de session KM de la dernière requete
+    public $KMCurrentId;  //Id de session KM de la derniï¿½re requete
     
-    public $KMFunction;   // fonction IKM à appeler
+    public $KMFunction;   // fonction IKM ï¿½ appeler
     public $KMParams;     // liste des parametres de la fonction KM    
     public $KMTypeLabel; 
     
@@ -164,16 +164,16 @@
 	function __construct() 
 	{
         $this->IP = 			"127.0.0.1";
-        $this->Port = 			1254;
+        $this->Port = 			1255;
         $this->Sock =			NULL;
-        $this->isConnected = 	false; // état de la connexion au serveur IKM
+        $this->isConnected = 	false; // ï¿½tat de la connexion au serveur IKM
     	$this->isValid = 		false; //la connection socket TCP est valide
    		$this->isError = 		true;
     	$this->isBlocking = 	true;
     	$this->Errormsg = 		"TCP Socket not created";
-    	$this->TimeLimit =		10; 	//10 s de time out par défaut, 0 pas de time out
+    	$this->TimeLimit =		10; 	//10 s de time out par dï¿½faut, 0 pas de time out
     	$this->KMId = 			-1;		//pas d'Id de session IKM
-    	$this->toSend 	=		"";     //chaine à envoyer au serveur
+    	$this->toSend 	=		"";     //chaine ï¿½ envoyer au serveur
     	$this->Received =		"";     //chaine de retour du serveur
     	
   		
@@ -186,14 +186,14 @@
     	$this->KMTypeLabel [6] = "int64"; 			$this->KMTypeLabel [7] = "uint64";		$this->KMTypeLabel [8] = "string";
     	$this->KMTypeLabel [9] = "float"; 			$this->KMTypeLabel [10] = "double";		$this->KMTypeLabel [11] = "bool";
     	$this->KMTypeLabel [12] = "simpledate"; 	$this->KMTypeLabel [13] = "rowid";		$this->KMTypeLabel [14] = "sessionid";
-		echo   $this->IP;
+		/*echo   $this->IP;
 		echo " ";
-		echo   $this->Port;
+		echo   $this->Port;*/
        }
     
 	function __destruct() 
 	{
-        //destruction des sessions KM crées par l'objet
+        //destruction des sessions KM crï¿½es par l'objet
         
 		if (isset($this->KMSessions))
 		{
@@ -213,7 +213,7 @@
 
     public function ExecuteKMCommand ($str)
     { 
-       //execute une commande déjà formatée, un script par exemple
+       //execute une commande dï¿½jï¿½ formatï¿½e, un script par exemple
        $this->toSend = $str;
        return $this->KM_Execute_Script ();
     }
@@ -260,7 +260,7 @@
     
     public function KM_Open_Script ($session = null)
     {
-    	//utilise un numéro de seeion, ou l'id de session par défaut de l'objet connecté si pas d'argument
+    	//utilise un numï¿½ro de seeion, ou l'id de session par dï¿½faut de l'objet connectï¿½ si pas d'argument
     	if ($session === null) 	{$session = $this->KMId;} 
     	if ($session < 0) 		{$session = $this->KMId;} 
     	$this->KMScriptSession = $session;    	
@@ -282,7 +282,7 @@
     
     public function AddFunction($function)
     {
-    	//on va fabriquer la chaine à destination du serveur
+    	//on va fabriquer la chaine ï¿½ destination du serveur
     	$params = func_get_args();
     	 
     	$this->toSend  = (string)$this->KMScriptSession . " ";
@@ -322,7 +322,7 @@
 	{
 		//analyse la chaine Received, pour la formater sous forme de tableau					
 
-		// on extrait le nb de lignes et de colonnes du résultat
+		// on extrait le nb de lignes et de colonnes du rï¿½sultat
 		//$idx = self::GetNextStringReturn['idx1'];
 		$idx = (int)KMServer::$GetNextStringReturn['idx1'];
 		$lines = 	(int)KMServer::GetNextString($this->Received,$idx);
@@ -352,7 +352,7 @@
 		$this->KMResults [$this->KMScriptSize]['sizes'] = 		$sizes;
 		$this->KMResults [$this->KMScriptSize]['names'] = 		$names;
 		
-		//on lit les données
+		//on lit les donnï¿½es
 		$results = array();
 			for ($i = 0; $i < $lines; $i++)
 			{
@@ -364,18 +364,19 @@
 				}
 			}
 		$this->KMResults [$this->KMScriptSize]['results'] = $results;
+		
 		return $idx;
 	}// end analyse line
 	
 	
     public function Analyse() 
 	{    
-      //analyse les différentes valeurs de retour de la chaine Received
+      //analyse les diffï¿½rentes valeurs de retour de la chaine Received
 	  
 	  if ($this->KMScriptSize >= 0)
 	  {
-	  	//on vide les tableaux de résultat
-	  	if (isset ($this->KMResults)) 	unset($this->KMResults);    //tableau des résultats    	
+	  	//on vide les tableaux de rï¿½sultat
+	  	if (isset ($this->KMResults)) 	unset($this->KMResults);    //tableau des rï¿½sultats    	
 	    $this->KMScriptSize = 0;
 	  }
 	  	
@@ -398,6 +399,7 @@
 		// on appelle AnalyseLine
 		$idx = $this->AnalyseLine($idx);
 		$len = strlen ($this->Received);
+		
 		if ($idx == -1)							return;	
 		if ($idx >= $len)						return;	
 			
@@ -423,8 +425,8 @@
 	public function OpenKMSession() 
 	{
 		//ouvre une nouvelle session KM
-		//retourne -1 en cas d'erreur, un numéro de session sinon
-		//la liste des n° de session est mise à jour
+		//retourne -1 en cas d'erreur, un numï¿½ro de session sinon
+		//la liste des nï¿½ de session est mise ï¿½ jour
 		$this->toSend = "-1 CONNECT (NULL);";
 		$this->KM_Execute_Script ();
 		if ($this->KMError == '0') return -1;	
@@ -435,11 +437,11 @@
 	
 	public function CloseKMSession($id) 
 	{
-		//détruit la session $id. attention, ne jamais utiliser le numéro de session de l'objet $KMId
+		//dï¿½truit la session $id. attention, ne jamais utiliser le numï¿½ro de session de l'objet $KMId
 		
 		$key = array_search($id, $this->KMSessions); 
 		if ($key === false) return false;		
-		unset ($this->KMSessions[$key]); //on vire la référence
+		unset ($this->KMSessions[$key]); //on vire la rï¿½fï¿½rence
 		return $this->Execute ($this->KMId,"session.KILL",$id);
 		
 	}//CloseKMSession
@@ -449,7 +451,7 @@
 	{
         if ($this->isValid === true)
         {
-        	//erreur, la connexion existe déjà
+        	//erreur, la connexion existe dï¿½jï¿½
         	$this->Errormsg = 		"socket already exists : " ;
         	$this->isError = 		true;
         	$this->isValid = 		false;
@@ -458,7 +460,7 @@
         }
 		
 		//on initialise le time out de connexion
-		//set_time_limit($this->TimeLimit); // à voir comment ça se comporte le truc
+		//set_time_limit($this->TimeLimit); // ï¿½ voir comment ï¿½a se comporte le truc
 		set_time_limit(0); //pour debuggage
         //creation de la socket cliente, et connection au niveau IP
         //sur Linux, remplacer AF_INET, par AF_UNIX plus efficace
@@ -480,7 +482,7 @@
         }
         
 
-        //ici, la connection TCP a été établie
+        //ici, la connection TCP a ï¿½tï¿½ ï¿½tablie
         	$this->isValid = 		true;
         	$this->isError = 		false;
         	$this->Errormsg = 		"ok";
@@ -499,7 +501,7 @@
     
     public function Send() 
 	{ 
-		//traitement d'erreur à finir
+		//traitement d'erreur ï¿½ finir
 		$ok = false;
 		if ($this->isValid === false) return $ok;		
 		$this->toSend = KMServer::ToProtocol($this->toSend);
@@ -531,7 +533,7 @@
 	
 	public function Receive() 
 	{ 
-		//traitement d'erreur à finir
+		//traitement d'erreur ï¿½ finir
 		$ok = false;
 		if ($this->isValid === false) return $ok;
 		

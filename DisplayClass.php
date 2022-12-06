@@ -1,15 +1,20 @@
 
 <?php
-
-class display
+header('Content-Type: text/html; charset=ISO-8859-15'); 
+class DisplayClass
 {
-	public $results;
+	private $results;
 
-	public function display( $_results)
-	{
+	public function __construct($_results){
 		$this->results = $_results;
 	}
-	
+
+	/*
+	public function display($_results)
+	{		
+		$this->results = $_results;
+	}
+	*/
 	
 	public function getbestwords_elements()
 	{		
@@ -125,6 +130,7 @@ class display
 
 	public function aff_articles()
 	{
+		//echo "*******aff_articles<br>";
 		if(!isset($this->results[0]['results'][0])) { return "";}
 		
 			foreach( $this->results[0]['results'] as $shape )

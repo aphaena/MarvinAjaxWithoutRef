@@ -65,13 +65,7 @@ class searchikm {
 			$this->session = $this->s->KMId;
 			//$this->currentsession = $this->s->KMCurrentId;			
 	}
-	
-
-
-
-	
-	
-	
+		
 	public function connect($ip, $port)
 	{
 		$this->s->IP = $ip;
@@ -79,6 +73,7 @@ class searchikm {
 			$this->s ->connect();
 			//$this->knw = $knw;
 			$this->session = $this->s->KMId;	
+
 	}
 	
 	// lit les champs string en steamming
@@ -88,8 +83,8 @@ class searchikm {
 	$pos = 1;
     $read = 0;
     $total = 0;
-    // on peut augmenter largement cela, c'est la taille d'un block à lire 4096 est pas mal en général
-    // vis à vis de la taille des blocs IP
+    // on peut augmenter largement cela, c'est la taille d'un block ï¿½ lire 4096 est pas mal en gï¿½nï¿½ral
+    // vis ï¿½ vis de la taille des blocs IP
 	// $str = Stream ($s,$s->KMId,"emailmaster", "186","texte");
     $size = 4096; 
 	$f = 'TABLE:' .$table . '.READBLOCK' ;
@@ -135,28 +130,30 @@ class searchikm {
 	}
 	public function getLastTime($message)
 	{
+		
 		$this->s->Execute ($this->session , 'GET','LASTTIME');//on vide la pile de contextes	
 		$lasttime = $this->s->KMResults[0]['results'][0][0].' ms ';
-		$this->totallastime = $this->totallastime +  $lasttime;
+		$this->totallastime = (double)$this->totallastime +  (double)$lasttime;
 		$this->tablasttimes[] = $message.": \t\t".$lasttime." \t-> ".$this->totallastime." ms ";
 		return $this->totallastime;
+		
 	}
 	
 	
 	public function FILTERVOIDELEMENTSok($mysearch)
 	{
 		$this->initLasttime();
-		  //on met la connaissance par défaut de l'objet contexts de la session
+		  //on met la connaissance par dï¿½faut de l'objet contexts de la session
 	    $this->s->Execute ($this->session, 'CONTEXTS.CLEAR');//on vide la pile de contextes
 	    $this->s->Execute ($this->session, 'RESULTS.CLEAR'); //on vide la pile de RS
 	    $this->s->Execute ($this->session, 'CONTEXTS.SET','KNOWLEDGE',$this->knw );
-	    $this->s->Execute ($this->session, 'CONTEXTS.NEW'); //on crée un nouveau contexte vide
+	    $this->s->Execute ($this->session, 'CONTEXTS.NEW'); //on crï¿½e un nouveau contexte vide
 	    $this->s->Execute ($this->session, 'CONTEXTS.ADDELEMENT',$mysearch,'100');   
 	    // CONTEXTS.NEWFROMSUBATTRACTOR(<1 0/>, <2 -1/>)
 	    //$this->s->Execute ($this->session , 'CONTEXTS.NEWFROMSUBATTRACTOR','0','-1');	   
 		$this->s->Execute ($this->session , 'CONTEXTS.FILTERVOIDELEMENTS','true');	   
 		//$this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE');  
-		$this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile	   
+		$this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile	   
 
 		 $filtered = $this->s->KMResults;
 		 return $filtered;
@@ -167,17 +164,17 @@ class searchikm {
 	{
 		$this->initLasttime();
 		$mysearch = $this->mixword( $mysearch);
-		  //on met la connaissance par défaut de l'objet contexts de la session
+		  //on met la connaissance par dï¿½faut de l'objet contexts de la session
 	    $this->s->Execute ($this->session, 'CONTEXTS.CLEAR');//on vide la pile de contextes
 	    $this->s->Execute ($this->session, 'RESULTS.CLEAR'); //on vide la pile de RS
 	    $this->s->Execute ($this->session, 'CONTEXTS.SET','KNOWLEDGE',$this->knw );
-	    $this->s->Execute ($this->session, 'CONTEXTS.NEW'); //on crée un nouveau contexte vide
+	    $this->s->Execute ($this->session, 'CONTEXTS.NEW'); //on crï¿½e un nouveau contexte vide
 	    $this->s->Execute ($this->session, 'CONTEXTS.ADDELEMENT',$mysearch,'100');   
 	    // CONTEXTS.NEWFROMSUBATTRACTOR(<1 0/>, <2 -1/>)
 	    //$this->s->Execute ($this->session , 'CONTEXTS.NEWFROMSUBATTRACTOR','0','-1');	   
 		$this->s->Execute ($this->session , 'CONTEXTS.FILTERVOIDELEMENTS','true');	   
 		//$this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE');  
-		$this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile	   
+		$this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile	   
 
 		 $filtered = "";
 		 
@@ -188,7 +185,7 @@ class searchikm {
  			 $strtmp = str_replace( ",", " ", $strtmp ) ;
   			 $strtmp = str_replace( "/*", " ", $strtmp ) ;
    			 $strtmp = str_replace( "*/", " ", $strtmp ) ;
-			 $strtmp = str_replace( "»", " ", $strtmp ) ;
+			 $strtmp = str_replace( "ï¿½", " ", $strtmp ) ;
  			 $strtmp = str_replace( ".", " ", $strtmp ) ;
 			 $strtmp = str_replace( "_", " ", $strtmp ) ;
 			  
@@ -266,12 +263,14 @@ class searchikm {
 	public  function searchLikeGooglefornewsite($mysearch)
 	{	
 			//$mysearch = trim($mysearch);
-		$this->initLasttime();
+		//$this->initLasttime();
 		//$mysearch = $this->FILTERVOIDELEMENTS2String($mysearch);
 		//echo $mysearch;
 		$this->getbestresults($mysearch);
+		//var_dump($mysearch)."<br><br>";
 		$this->s->Execute ($this->session, 'RESULTS.GET','ResultCount');
-		if(isset($this->s->KMResults)) $count = $this->s->KMResults;
+		//if(isset($this->s->KMResults)) $count = $this->s->KMResults;
+		//var_dump($this->s->KMResults)."<br><br>";
 	
 	//echo "search get Best Results ";
 	/*
@@ -316,6 +315,7 @@ class searchikm {
 		$this->getbestresults($mysearch);
 		$this->s->Execute ($this->session, 'RESULTS.GET','ResultCount');
 		$count = $this->s->KMResults;
+		
 	}
 
 	public function searchStandardxx($mysearch){	
@@ -327,10 +327,17 @@ class searchikm {
 		$this->s->Execute ($this->session, 'CONTEXTS.SET','KNOWLEDGE',$this->knw );							$this->getLastTime("");
 		$this->s->Execute ($this->session, 'CONTEXTS.NEW');													$this->getLastTime("");
 		$this->s->Execute ($this->session, 'CONTEXTS.ADDELEMENT',$mysearch,'100');							$this->getLastTime("");
-		$this->s->Execute ($this->session, 'CONTEXTS.NEWFROMATTRACTOR','0', '-1' ,'0', '1' ); 				$this->getLastTime("");	
-	    $this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEM','0','-1','-1' );  							$this->getLastTime("");
-		//$mysearch = $this->FILTERVOIDELEMENTSok($mysearch);
-	
+		//$this->s->Execute ($this->session, 'CONTEXTS.NEWFROMATTRACTOR','0', '-1' ,'0', '1' ); 				$this->getLastTime("");	
+		$this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEM','0','-1','-1' );  							$this->getLastTime("");
+		//$this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEMSHAPE','0','-1'); 
+		//$this->s->Execute ($this->session, 'CONTEXTS.UNION');	
+		//$this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEMLINKS','2','0','0','20' );    
+		//$this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE' );
+		//$mysearch = $this->FILTERVOIDELEMENTSok($mysearch);		
+		//$this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEMLINKS','2','0','-1','-1' ); $this->getLastTime("'CONTEXTS.NEWFROMSEMLINKS','2','0','-1','-1'");
+	    //$this->s->Execute ($this->session, 'CONTEXTS.UNION');   
+		$this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEMATTRACTOR','0','-1' ); 
+		//$this->s->Execute ($this->session, 'CONTEXTS.UNION');   
 		//$this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE');$this->getLastTime("");
 		//$this->s->Execute ($this->session, 'CONTEXTS.EVALUATE');$this->getLastTime("");		
 		$this->s->Execute ($this->session, 'CONTEXTS.FILTERACT','1','true');								$this->getLastTime("");
@@ -340,7 +347,7 @@ class searchikm {
 	    $this->s->Execute ($this->session, 'CONTEXTS.TORESULTS','false','1500');							$this->getLastTime("");
 		$this->s->Execute ($this->session, 'RESULTS.SortBy','Act','false');									$this->getLastTime("");
 	    $this->s->Execute ($this->session, 'RESULTS.SelectBy','Act','>','0'); 								$this->getLastTime("");
-		//$this->s->Execute ($this->session, 'RESULTS.NORMALIZE','RELATIVE'); 
+		$this->s->Execute ($this->session, 'RESULTS.NORMALIZE','RELATIVE'); 
 		//echo "<pre>";
 		//print_r($this->s->KMResults);
 		//echo "</pre>";
@@ -483,13 +490,13 @@ class searchikm {
 	}
 	
 	
-	/** trouver les articles de contextedifferent et lister les titre des articles.
+	/* trouver les articles de contextedifferent et lister les titre des articles.
 	
-		 stocker le titre du premier article ( context plus élevé)
+		 stocker le titre du premier article ( context plus ï¿½levï¿½)
 			
 		 supprimer tous les articles qui sont dans le meme context que le premier
 		
-		pour chaque article restant  recommecer la meme opération
+		pour chaque article restant  recommecer la meme opï¿½ration
 		*/
 	function listContextsArticles($mysearch)
 	{
@@ -722,7 +729,7 @@ for($i=0; $i<30; $i++) {
 		
 		$this->initLasttime();
 		//$mysearch = $this->dirtydebug($mysearch);
-	   //on met la connaissance par défaut de l'objet contexts de la session
+	   //on met la connaissance par dï¿½faut de l'objet contexts de la session
 	    $this->s->Execute ($this->session, 'CONTEXTS.CLEAR');
 	    $this->s->Execute ($this->session, 'RESULTS.CLEAR'); 
 	    $this->s->Execute ($this->session, 'CONTEXTS.SET','KNOWLEDGE',$this->knw ); 
@@ -1087,7 +1094,7 @@ for($i=0; $i<30; $i++) {
 		$this->s->Execute ($this->session , 'CONTEXTS.CLEAR');//on vide la pile de contextes
 		$this->s->Execute ($this->session , 'RESULTS.CLEAR'); //on vide la pile de RS
 		$this->s->Execute ($this->session , 'CONTEXTS.SET','KNOWLEDGE',$this->knw );
-		$this->s->Execute ($this->session , 'CONTEXTS.NEW'); //on crée un nouveau contexte vide
+		$this->s->Execute ($this->session , 'CONTEXTS.NEW'); //on crï¿½e un nouveau contexte vide
 		$this->s->Execute ($this->session , 'CONTEXTS.ADDELEMENT',$mysearch,'100'); $this->getLastTime("'CONTEXTS.ADDELEMENT',$mysearch,'100'");
 		$this->s->Execute ($this->session , 'CONTEXTS.FILTERVOIDELEMENTS','true');$this->getLastTime("'CONTEXTS.FILTERVOIDELEMENTS','true'");
 		$this->s->Execute ($this->session , 'CONTEXTS.TORESULTS','false','30');$this->getLastTime("'CONTEXTS.TORESULTS','false','30'");
@@ -1127,11 +1134,11 @@ for($i=0; $i<30; $i++) {
 	{
 		echo " searchByRmxC " ;
 		$this->initLasttime();
-		  //on met la connaissance par défaut de l'objet contexts de la session
+		  //on met la connaissance par dï¿½faut de l'objet contexts de la session
 	    $this->s->Execute ($this->session, 'CONTEXTS.CLEAR');//on vide la pile de contextes
 	    $this->s->Execute ($this->session, 'RESULTS.CLEAR'); //on vide la pile de RS
 	    $this->s->Execute ($this->session, 'CONTEXTS.SET','KNOWLEDGE',$this->knw );
-	    $this->s->Execute ($this->session, 'CONTEXTS.NEW'); //on crée un nouveau contexte vide
+	    $this->s->Execute ($this->session, 'CONTEXTS.NEW'); //on crï¿½e un nouveau contexte vide
 	    $this->s->Execute ($this->session, 'CONTEXTS.ADDELEMENT',$mysearch,'100');   
 		$this->s->Execute ($this->session , 'CONTEXTS.FILTERVOIDELEMENTS','true');	    
         $this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEMATTRACTOR','0','-1');
@@ -1144,7 +1151,7 @@ for($i=0; $i<30; $i++) {
         $this->s->Execute ($this->session, 'CONTEXTS.EVALUATE'); 
         $this->s->Execute ($this->session, 'CONTEXTS.UNION');
  	    $this->s->Execute ($this->session, 'CONTEXTS.TORESULTS','false','800'); 
-	    $this->s->Execute ($this->session, 'RESULTS.SelectBy','Act','>','0'); //on élimine les act = 0
+	    $this->s->Execute ($this->session, 'RESULTS.SelectBy','Act','>','0'); //on ï¿½limine les act = 0
 	    $this->s->Execute ($this->session, 'RESULTS.SortBy','Act','false'); // on tri par Act descendante
 	}
 
@@ -1157,12 +1164,12 @@ for($i=0; $i<30; $i++) {
 		$this->s->Execute ($this->session, 'CONTEXTS.CLEAR');//on vide la pile de contextes
 	    $this->s->Execute ($this->session, 'RESULTS.CLEAR'); //on vide la pile de RS
 	    $this->s->Execute ($this->session, 'CONTEXTS.SET','KNOWLEDGE',$this->knw );
-	    $this->s->Execute ($this->session, 'CONTEXTS.NEW'); //on crée un nouveau contexte vide
+	    $this->s->Execute ($this->session, 'CONTEXTS.NEW'); //on crï¿½e un nouveau contexte vide
 	    $this->s->Execute ($this->session, 'CONTEXTS.ADDELEMENT',$mysearch,'100');
 		$this->s->Execute ($this->session , 'CONTEXTS.FILTERVOIDELEMENTS','true');	    
 	    $this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEMLINKS','2','0','0','-1');
 	    $this->s->Execute ($this->session, 'CONTEXTS.TORESULTS','false','800'); 
-	    $this->s->Execute ($this->session, 'RESULTS.SelectBy','Act','>','0'); //on élimine les act = 0
+	    $this->s->Execute ($this->session, 'RESULTS.SelectBy','Act','>','0'); //on ï¿½limine les act = 0
 	    $this->s->Execute ($this->session, 'RESULTS.SortBy','Act','true'); // on tri par Act descendante
 
 	}
@@ -1176,13 +1183,13 @@ for($i=0; $i<30; $i++) {
 		$this->s->Execute ($this->session, 'CONTEXTS.CLEAR');//on vide la pile de contextes
 	    $this->s->Execute ($this->session, 'RESULTS.CLEAR'); //on vide la pile de RS
 	    $this->s->Execute ($this->session, 'CONTEXTS.SET','KNOWLEDGE',$this->knw );
-	    $this->s->Execute ($this->session, 'CONTEXTS.NEW'); //on crée un nouveau contexte vide
+	    $this->s->Execute ($this->session, 'CONTEXTS.NEW'); //on crï¿½e un nouveau contexte vide
 	    $this->s->Execute ($this->session, 'CONTEXTS.ADDELEMENT',$mysearch,'100');
 		$this->s->Execute ($this->session , 'CONTEXTS.FILTERVOIDELEMENTS','true');	    
  	    $this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEMATTRACTOR','0','-1');
 	    $this->s->Execute ($this->session, 'CONTEXTS.UNION');   
 	    $this->s->Execute ($this->session, 'CONTEXTS.TORESULTS','false','800'); 
-	    $this->s->Execute ($this->session, 'RESULTS.SelectBy','Act','>','0'); //on élimine les act = 0
+	    $this->s->Execute ($this->session, 'RESULTS.SelectBy','Act','>','0'); //on ï¿½limine les act = 0
 	    $this->s->Execute ($this->session, 'RESULTS.SortBy','Act','true'); // on tri par Act descendante		
 	}
 */
@@ -1198,9 +1205,9 @@ for($i=0; $i<30; $i++) {
 		$this->s->Execute ($this->session , 'CONTEXTS.FILTERVOIDELEMENTS','true');    
     $this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEMLINKS','2','0','0','-1' );    
     $this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE' );
-    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile
+    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile
 	$this->s->Execute ($this->session, 'CONTEXTS.TORESULTS','false','800'); 
-	$this->s->Execute ($this->session, 'RESULTS.SelectBy','Act','>','0'); //on élimine les act = 0
+	$this->s->Execute ($this->session, 'RESULTS.SelectBy','Act','>','0'); //on ï¿½limine les act = 0
 	$this->s->Execute ($this->session, 'RESULTS.SortBy','Act','true'); // on tri par Act descendante	
 	}	
 */
@@ -1218,7 +1225,7 @@ for($i=0; $i<30; $i++) {
     $this->s->Execute ($this->session, 'CONTEXTS.UNION' );
     $this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEMLINKS','2','0','0','-1' );    
     $this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE' );
-    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile	    
+    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile	    
 	}
 */
 /*	
@@ -1242,9 +1249,9 @@ for($i=0; $i<30; $i++) {
     $this->s->Execute ($this->session, 'CONTEXTS.UNION' );
     $this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEMLINKS','2','0','0','-1' );    
     $this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE' );
-    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile
+    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile
 	$this->s->Execute ($this->session, 'CONTEXTS.TORESULTS','false','800'); 
-	$this->s->Execute ($this->session, 'RESULTS.SelectBy','Act','>','0'); //on élimine les act = 0
+	$this->s->Execute ($this->session, 'RESULTS.SelectBy','Act','>','0'); //on ï¿½limine les act = 0
 	$this->s->Execute ($this->session, 'RESULTS.SortBy','Act','true'); // on tri par Act descendante	
 	}
 	
@@ -1265,9 +1272,9 @@ for($i=0; $i<30; $i++) {
 	$this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEMLINKS','2','0','0','100' );    
     $this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE' );
 	 if(isset($_GET['genact']) && $_GET['genact'] == "gen"){  $this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','false' );}   
-    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile
+    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile
 	//$this->s->Execute ($this->session, 'CONTEXTS.TORESULTS','false'); 
-	//$this->s->Execute ($this->session, 'RESULTS.SelectBy','Act','>','0'); //on élimine les act = 0
+	//$this->s->Execute ($this->session, 'RESULTS.SelectBy','Act','>','0'); //on ï¿½limine les act = 0
 	//$this->s->Execute ($this->session, 'RESULTS.SortBy','Act','true'); // on tri par Act descendante	
 	}
 
@@ -1288,9 +1295,9 @@ for($i=0; $i<30; $i++) {
 	//$this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEMLINKS','2','0','0','100' );    
     //$this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE' );
     //$this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','true' );   
-    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile
+    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile
 	//$this->s->Execute ($this->session, 'CONTEXTS.TORESULTS','false'); 
-	//$this->s->Execute ($this->session, 'RESULTS.SelectBy','Act','>','0'); //on élimine les act = 0
+	//$this->s->Execute ($this->session, 'RESULTS.SelectBy','Act','>','0'); //on ï¿½limine les act = 0
 	//$this->s->Execute ($this->session, 'RESULTS.SortBy','Act','true'); // on tri par Act descendante	
 	}
 	
@@ -1309,9 +1316,9 @@ for($i=0; $i<30; $i++) {
 	  $this->s->Execute ($this->session, 'CONTEXTS.UNION');	
   //$this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEMLINKS','15','0','0','100' );    
 	$this->s->Execute ($this->session, 'CONTEXTS.EVALUATE');     
-	$this->s->Execute ($this->session, 'CONTEXTS.FILTERACT','15','true');////on sélectionne les activité >= 1%  
+	$this->s->Execute ($this->session, 'CONTEXTS.FILTERACT','15','true');////on sï¿½lectionne les activitï¿½ >= 1%  
 	// $this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','false' );  
-    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile	
+    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile	
 	}
 	
 */
@@ -1342,7 +1349,7 @@ for($i=0; $i<30; $i++) {
 					$tabcontext = $this->s->KMResults;
 						  
 					//$this->aff_tabl($this->s->KMResults);	
-					$this->tabcontents[0][$index] = $tabcontext;	
+					//$this->tabcontents[0][$index] = $tabcontext;	
 					$this->s->Execute ($this->session, 'CONTEXTS.DROP' );	
 					$index++;
 		}
@@ -1364,9 +1371,9 @@ for($i=0; $i<30; $i++) {
     $this->s->Execute ($this->session, 'CONTEXTS.UNION');	
 	$this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEMLINKS','2','0','0','20' );    
     $this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE' );
-    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile
+    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile
 	$this->s->Execute ($this->session, 'CONTEXTS.TORESULTS','false','800'); 
-	$this->s->Execute ($this->session, 'RESULTS.SelectBy','Act','>','0'); //on élimine les act = 0
+	$this->s->Execute ($this->session, 'RESULTS.SelectBy','Act','>','0'); //on ï¿½limine les act = 0
 	$this->s->Execute ($this->session, 'RESULTS.SortBy','Act','true'); // on tri par Act descendante	
 	}
 */
@@ -1386,7 +1393,7 @@ for($i=0; $i<30; $i++) {
     //$this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEMLINKS','2','0','0','-1' );    
     //$this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE' );
 	 if(isset($_SESSION['genact']) && $_SESSION['genact'] == "gen"){  $this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','false' );} 
-    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile	
+    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile	
 	}
 	
 	public function searchSemShapeSimple($mysearch)
@@ -1407,7 +1414,7 @@ for($i=0; $i<30; $i++) {
     $this->s->Execute ($this->session, 'CONTEXTS.UNION');
     $this->s->Execute ($this->session, 'CONTEXTS.UNION');     
 
-    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile	
+    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile	
 	}
 
 /*
@@ -1471,7 +1478,7 @@ else
     $this->s->Execute ($this->session, 'CONTEXTS.NEWFROMATTRACTOR','1','100' ); 
     //$this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','false' );  
     $this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE' );  	
-    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile	
+    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile	
 	  $this->s->Execute ($this->session, 'CONTEXTS.GETSIZE' );
 	  $N = $this->s->KMResults[0]['results'][0][0];  
 	  return $N;
@@ -1530,7 +1537,7 @@ else
     
 	 if(isset($_SESSION['genact']) && $_SESSION['genact'] == "gen"){  $this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','false' );}
 	 //$this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','false' );
-    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile	
+    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile	
 	}
 	
 	public function searchAttractorNew($mysearch)	
@@ -1550,7 +1557,7 @@ if($_SESSION['locutization']=="ok") $mysearch = $this->querylocutization($mysear
 
   if ($N >1)
     { 
-   //on évalue l'ensemble des possibles locutions
+   //on ï¿½value l'ensemble des possibles locutions
    $this->s->Execute ($this->session, 'CONTEXTS.DUP' );
    $this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSHAPE','0','-1' ); 
    $this->s->Execute ($this->session, 'CONTEXTS.UNION');
@@ -1580,7 +1587,7 @@ if($_SESSION['locutization']=="ok") $mysearch = $this->querylocutization($mysear
    $this->s->Execute ($this->session, 'CONTEXTS.INTERSECTION'); 
    $this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE');
 
-  //evaluation grossière des activités
+  //evaluation grossiï¿½re des activitï¿½s
    $this->s->Execute ($this->session, 'CONTEXTS.UNION');
    $this->s->Execute ($this->session, 'CONTEXTS.EVALUATE');
    $this->s->Execute ($this->session, 'CONTEXTS.INTERSECTION'); 
@@ -1593,7 +1600,7 @@ else
 
 }
 		 if(isset($_SESSION['genact']) && $_SESSION['genact'] == "gen"){  $this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','false' );}
-   $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile   
+   $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile   
 
     
 
@@ -1616,7 +1623,7 @@ else
     	$this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEMLINKS','2','0','0','80' );   
     	$this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE' );  
 	 if(isset($_SESSION['genact']) && $_SESSION['genact'] == "gen"){  $this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','false' );}   
-    	$this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile	
+    	$this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile	
 	}
 	
 	public function searchSemAttractorNew($mysearch){
@@ -1630,20 +1637,20 @@ else
    $this->s->Execute ($this->session, 'CONTEXTS.ADDELEMENT', $mysearch, '100' );
    $this->s->Execute ($this->session , 'CONTEXTS.FILTERVOIDELEMENTS','true');
 
-   //on évalue l'importance relative des termes de la requete
+   //on ï¿½value l'importance relative des termes de la requete
    $this->s->Execute ($this->session, 'CONTEXTS.DUP' );
    $this->s->Execute ($this->session, 'CONTEXTS.EVALUATE');
    $this->s->Execute ($this->session, 'CONTEXTS.UNION');
   $this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE');
 
-   //on évalue les contextes dans la requete   
+   //on ï¿½value les contextes dans la requete   
   $this->s->Execute ($this->session, 'CONTEXTS.PARTITION', '1', '0','0','-1'); 
 // le retour donne le nombre de contextes : exemple SubClasses <1 2/> ;    soit NC
 // ou alors on fait un  CONTEXTS.GET(<5 COUNT/>) pour avoir la taille finale de la pile  N, et NC = N-1
    	 $this->s->Execute ($this->session, 'CONTEXTS.GET','COUNT');		
      $NC = $this->s->KMResults[0]['results'][0][0]-1;     
      $i = $NC;
-   // là on fait une boucle sur NC genre
+   // lï¿½ on fait une boucle sur NC genre
    //print_r($NC." ");
      while ($i >0)
      {
@@ -1692,7 +1699,7 @@ else
     $this->s->Execute ($this->session, 'CONTEXTS.EVALUATE');
     $this->s->Execute ($this->session, 'CONTEXTS.FILTERACT','25');
 	 if(isset($_SESSION['genact']) && $_SESSION['genact'] == "gen"){  $this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','false' );}       
-    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile	
+    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile	
 	}
 	
 	//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -1709,19 +1716,19 @@ else
    $this->s->Execute ($this->session, 'CONTEXTS.ADDELEMENT', $mysearch, '100' );
    $this->s->Execute ($this->session , 'CONTEXTS.FILTERVOIDELEMENTS','true');
 
-   //on évalue l'importance relative des termes de la requete
+   //on ï¿½value l'importance relative des termes de la requete
    $this->s->Execute ($this->session, 'CONTEXTS.DUP' );
    $this->s->Execute ($this->session, 'CONTEXTS.EVALUATE');
    $this->s->Execute ($this->session, 'CONTEXTS.UNION');
   $this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE');
 
-   //on évalue les contextes dans la requete   
+   //on ï¿½value les contextes dans la requete   
    $this->s->Execute ($this->session, 'CONTEXTS.PARTITION', '1', '0','0','-1');
 // le retour donne le nombre de contextes : exemple SubClasses <1 2/> ;    soit NC
 // ou alors on fait un  CONTEXTS.GET(<5 COUNT/>) pour avoir la taille finale de la pile  N, et NC = N-1
   
    //$this->s->Execute ($this->session, 'CONTEXTS.GETCOUNT'); 
-   // là on fait une boucle sur NC genre
+   // lï¿½ on fait une boucle sur NC genre
    	 $this->s->Execute ($this->session, 'CONTEXTS.GET','COUNT');		
      $NC = $this->s->KMResults[0]['results'][0][0]-1;     
      $i = $NC;
@@ -1752,7 +1759,7 @@ else
     $this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE');    
     $this->s->Execute ($this->session, 'CONTEXTS.FILTERACT', '25','true');
     if(isset($_SESSION['genact']) && $_SESSION['genact'] == "gen"){  $this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','false' );}    
-    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile        
+    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile        
 
    }
 
@@ -1793,12 +1800,9 @@ public function getbestresults( $mysearch )
 		
 		$this->s->Execute ($this->session, 'CONTEXTS.GETBESTRESULTS',$mysearch ); $this->getLastTime("");
 		//echo "KMErrorMsg:".$this->s->KMErrorMsg." KMError:".$this->s->KMError." ";
-
-
-				
-		/*
+						
 		$kmr = $this->s->KMResults;
-		
+		/*
 		echo "<pre>";
 		print_r($kmr);
 		echo "</pre>";
@@ -1847,19 +1851,19 @@ public function getbestresults( $mysearch )
    		$this->s->Execute ($this->session, 'CONTEXTS.NEW' );
 	   	$this->s->Execute ($this->session, 'CONTEXTS.ADDELEMENT', $mysearch, '100' );
 	   	$this->s->Execute ($this->session , 'CONTEXTS.FILTERVOIDELEMENTS','true');	
-	   //on évalue l'importance relative des termes de la requete
+	   //on ï¿½value l'importance relative des termes de la requete
 	   	$this->s->Execute ($this->session, 'CONTEXTS.DUP' );
 	   	$this->s->Execute ($this->session, 'CONTEXTS.EVALUATE');
 	   	$this->s->Execute ($this->session, 'CONTEXTS.UNION');
 	  	$this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE');
 
-   //on évalue les contextes dans la requete   
+   //on ï¿½value les contextes dans la requete   
    $this->s->Execute ($this->session, 'CONTEXTS.PARTITION', '1', '0','0','-1');
 // le retour donne le nombre de contextes : exemple SubClasses <1 2/> ;    soit NC
 // ou alors on fait un  CONTEXTS.GET(<5 COUNT/>) pour avoir la taille finale de la pile  N, et NC = N-1
   
    //$this->s->Execute ($this->session, 'CONTEXTS.GETCOUNT'); 
-   // là on fait une boucle sur NC genre
+   // lï¿½ on fait une boucle sur NC genre
    	 $this->s->Execute ($this->session, 'CONTEXTS.GET','COUNT');		
      $NC = $this->s->KMResults[0]['results'][0][0]-1;     
      $i = $NC;
@@ -1886,7 +1890,7 @@ public function getbestresults( $mysearch )
     $this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE');    
     $this->s->Execute ($this->session, 'CONTEXTS.FILTERACT', '25','true');
     if(isset($_SESSION['genact']) && $_SESSION['genact'] == "gen"){  $this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','false' );}    
-    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile        
+    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile        
 
    }   
    
@@ -1911,7 +1915,7 @@ public function getbestresults( $mysearch )
     $this->s->Execute ($this->session, 'CONTEXTS.ADDELEMENT', $mysearch, '50' );
     $this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSPACE','-1','50' ); //CONTEXTS.NEWFROMSEM(<1 0/>, <2 -1/>, <2 -1/>)
 	 if(isset($_SESSION['genact']) && $_SESSION['genact'] == "gen"){  $this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','false' );}   
-    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile	
+    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile	
 	}
 
 
@@ -1934,12 +1938,12 @@ public function getbestresults( $mysearch )
 		$this->s->Execute ($this->session, 'CONTEXTS.CLEAR');//on vide la pile de contextes
 		$this->s->Execute ($this->session, 'RESULTS.CLEAR');//on vide la pile de contextes
 		$this->s->Execute ($this->session, 'CONTEXTS.SET','KNOWLEDGE',$this->knw );
-		$this->s->Execute ($this->session, 'TABLE:'.$this->mastertable.'.TOCONTEXT',$myrowid);// on récupère le knw_abstract de l'article 167723
+		$this->s->Execute ($this->session, 'TABLE:'.$this->mastertable.'.TOCONTEXT',$myrowid);// on rï¿½cupï¿½re le knw_abstract de l'article 167723
 	
-		//$this->s->Execute ($this->session, 'CONTEXTS.EVALUATE');////ça se retrouve sur la pile de contexte, on met à jour les activités
+		//$this->s->Execute ($this->session, 'CONTEXTS.EVALUATE');////ï¿½a se retrouve sur la pile de contexte, on met ï¿½ jour les activitï¿½s
 	 if(isset($_SESSION['genact']) && $_SESSION['genact'] == "gen"){  $this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','false' );}		
-		$this->s->Execute ($this->session, 'CONTEXTS.FILTERACT','40','true');////on sélectionne les activité >= 1%
-		$this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile			
+		$this->s->Execute ($this->session, 'CONTEXTS.FILTERACT','40','true');////on sï¿½lectionne les activitï¿½ >= 1%
+		$this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile			
 	}
 	
 	public function searchTagsEval($myrowid)
@@ -1948,7 +1952,7 @@ public function getbestresults( $mysearch )
 		$this->s->Execute ($this->session, 'CONTEXTS.CLEAR');//on vide la pile de contextes
 		$this->s->Execute ($this->session, 'RESULTS.CLEAR');//on vide la pile de contextes
 		$this->s->Execute ($this->session, 'CONTEXTS.SET','KNOWLEDGE',$this->knw );
-		$this->s->Execute ($this->session, 'TABLE:'.$this->mastertable.'.TOCONTEXT',$myrowid);// on récupère le knw_abstract de l'article 167723			
+		$this->s->Execute ($this->session, 'TABLE:'.$this->mastertable.'.TOCONTEXT',$myrowid);// on rï¿½cupï¿½re le knw_abstract de l'article 167723			
    		$this->s->Execute ($this->session, 'CONTEXTS.SORTBYGENERALITY', '0');
 		$this->s->Execute ($this->session, 'CONTEXTS.EVALUATE');	
 		$this->s->Execute ($this->session, 'CONTEXTS.FILTERACT','40','true');
@@ -1967,14 +1971,14 @@ public function getbestresults( $mysearch )
 		$this->s->Execute ($this->session, 'CONTEXTS.NEW' );
 		$this->s->Execute ($this->session, 'CONTEXTS.ADDELEMENT', $mytext, '100' );
 		$this->s->Execute ($this->session , 'CONTEXTS.FILTERVOIDELEMENTS','true');
-		$this->s->Execute ($this->session, 'CONTEXTS.EVALUATE');////ça se retrouve sur la pile de contexte, on met à jour les activités
+		$this->s->Execute ($this->session, 'CONTEXTS.EVALUATE');////ï¿½a se retrouve sur la pile de contexte, on met ï¿½ jour les activitï¿½s
     	$this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE' );                        
-		$this->s->Execute ($this->session, 'CONTEXTS.EVALUATE');////ça se retrouve sur la pile de contexte, on met à jour les activités
+		$this->s->Execute ($this->session, 'CONTEXTS.EVALUATE');////ï¿½a se retrouve sur la pile de contexte, on met ï¿½ jour les activitï¿½s
 		$this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE');
-		//$this->s->Execute ($this->session, 'CONTEXTS.FILTERACT','45','false');////on sélectionne les activité >= 1%
-		$this->s->Execute ($this->session, 'CONTEXTS.FILTERACT','5','true');////on sélectionne les activité >= 1%
+		//$this->s->Execute ($this->session, 'CONTEXTS.FILTERACT','45','false');////on sï¿½lectionne les activitï¿½ >= 1%
+		$this->s->Execute ($this->session, 'CONTEXTS.FILTERACT','5','true');////on sï¿½lectionne les activitï¿½ >= 1%
 	 if(isset($_SESSION['genact']) && $_SESSION['genact'] == "gen"){  $this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','false' );}
-		$this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' ); //on récupère le contexte en haut de la pile
+		$this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' ); //on rï¿½cupï¿½re le contexte en haut de la pile
 	
 	}
 	
@@ -1992,9 +1996,9 @@ public function getbestresults( $mysearch )
     $this->s->Execute ($this->session, 'CONTEXTS.UNION');	
 	$this->s->Execute ($this->session, 'CONTEXTS.NEWFROMSEMLINKS','5','0','0','100' );    
 	$this->s->Execute ($this->session, 'CONTEXTS.EVALUATE');     
-	$this->s->Execute ($this->session, 'CONTEXTS.FILTERACT','1','true');////on sélectionne les activité >= 1%  
+	$this->s->Execute ($this->session, 'CONTEXTS.FILTERACT','1','true');////on sï¿½lectionne les activitï¿½ >= 1%  
 	 if(isset($_SESSION['genact']) && $_SESSION['genact'] == "gen"){  $this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','false' );} 
-    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile	
+    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile	
 	}
 	
 	public function searchFromSemTagsCat($mysearch) //SemanticLinks
@@ -2017,9 +2021,9 @@ public function getbestresults( $mysearch )
     $this->s->Execute ($this->session , 'CONTEXTS.FILTERVOIDELEMENTS','true');
     $this->s->Execute ($this->session, 'CONTEXTS.NEWFROMATTRACTOR','-1','-1' );      
 	$this->s->Execute ($this->session, 'CONTEXTS.EVALUATE');     
-	$this->s->Execute ($this->session, 'CONTEXTS.FILTERACT','5','true');////on sélectionne les activité >= 1%  
+	$this->s->Execute ($this->session, 'CONTEXTS.FILTERACT','5','true');////on sï¿½lectionne les activitï¿½ >= 1%  
 	// $this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','false' );  
-    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile	
+    $this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile	
 	}
 	public function searchFromAttractorTagsCat($mysearch) //SemanticLinks
 	{	
@@ -2030,17 +2034,17 @@ public function getbestresults( $mysearch )
 	}
 	
 	/*
-	 1 RESULTS.GET(<10 OWNERTABLE/>) // récuoère la table liée
+	 1 RESULTS.GET(<10 OWNERTABLE/>) // rï¿½cuoï¿½re la table liï¿½e
 1 1 1 1 8 0 OwnerTable <11 wikimaster2/> ;
 1 RESULTS.GET(<11 RESULTCOUNT/>) //recupere le nombre de ligne ds le RS du haut
 1 1 1 1 1 0 ResultCount <3 133/> ;
-1 RESULTS.GET(<14 RESULTCAPACITY/>) // recupere la capacité du RS du haut
+1 RESULTS.GET(<14 RESULTCAPACITY/>) // recupere la capacitï¿½ du RS du haut
 1 1 1 1 1 0 ResultCapacity <3 133/> ;
-1 RESULTS.GET(<9 FETCHSIZE/>) // récupère la taille du fetch (20 par défaut)
+1 RESULTS.GET(<9 FETCHSIZE/>) // rï¿½cupï¿½re la taille du fetch (20 par dï¿½faut)
 1 1 1 1 1 0 FetchSize <2 10/> ;
-1 RESULTS.GET(<10 FETCHSTART/>) // récupère l'indice du prochain fetch
+1 RESULTS.GET(<10 FETCHSTART/>) // rï¿½cupï¿½re l'indice du prochain fetch
 1 1 1 1 1 0 FetchStart <1 1/> ;
-1 RESULTS.GET(<7 FETCHID/>) //récupère le prochain Id du fetch 
+1 RESULTS.GET(<7 FETCHID/>) //rï¿½cupï¿½re le prochain Id du fetch 
 	 */
 	
 /*
@@ -2101,8 +2105,8 @@ CONTEXTS.NORMALIZE()
 	$this->s->Execute ($this->session, 'CONTEXTS.INTERSECTION' );
 	$this->s->Execute ($this->session, 'CONTEXTS.NORMALIZE' ); 
 	
-	$this->s->Execute ($this->session, 'CONTEXTS.FILTERACT','80','true');////on sélectionne les activité >= 1%  
-	$this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile	
+	$this->s->Execute ($this->session, 'CONTEXTS.FILTERACT','80','true');////on sï¿½lectionne les activitï¿½ >= 1%  
+	$this->s->Execute ($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile	
 	}
 	
 	
@@ -2123,6 +2127,7 @@ CONTEXTS.NORMALIZE()
 		$this->s->Execute ($this->s->KMId, 'RESULTS.SET','FORMAT',$listfields);
 		$this->getLastTime("'RESULTS.SET','FORMAT'");		
 		$this->s->Execute ($this->s->KMId, 'RESULTS.FETCH',$nblignes, $pagestart);
+		//var_dump($this->s->KMResults);
 
 	}	
 	
@@ -2142,6 +2147,7 @@ CONTEXTS.NORMALIZE()
 	
 	public function readArrayKMserver() // renvoie le resultat de KmServer sous forme de array
 	{
+		//var_dump($this->s->KMResults );
 		if(isset($this->s->KMResults [0]["results"][0][0]))
 		{
 		//$str = $this->s->KMResults [0]["results"][0][0];
@@ -2298,9 +2304,9 @@ CONTEXTS.NORMALIZE()
 
 	public function MVMerge()
 	{	
-      //consolide 2 contextes, sans (trop de) réévaluation des activités
+      //consolide 2 contextes, sans (trop de) rï¿½ï¿½valuation des activitï¿½s
       //pile 2 contextes - > le resultat   stack -1
-      //validée...a mettre dans l'aPI
+      //validï¿½e...a mettre dans l'aPI
       
       //on duplique les deux contextes 
       $this->s->Execute($this->session, 'CONTEXTS.DUP' );
@@ -2319,7 +2325,7 @@ CONTEXTS.NORMALIZE()
 	{	
      //calcul (A U B) - (A inter B)
      //pile 2 contextes - > le resultat   stack -1
-     //testée..à modifier avec nouvelle aPI
+     //testï¿½e..ï¿½ modifier avec nouvelle aPI
       
       //on duplique les deux contextes 
       $this->s->Execute($this->session, 'CONTEXTS.DUP' );
@@ -2332,7 +2338,7 @@ CONTEXTS.NORMALIZE()
       // A inter B      
       $this->s->Execute($this->session, 'CONTEXTS.INTERSECTION' );
       $this->s->Execute($this->session, 'CONTEXTS.AMPLIFY','-1' );       
-      //somme des deux et filtrage des activités négatives  
+      //somme des deux et filtrage des activitï¿½s nï¿½gatives  
      
       $this->s->Execute($this->session, 'CONTEXTS.UNION' ); 
       $this->s->Execute($this->session, 'CONTEXTS.NORMALIZE' );
@@ -2362,7 +2368,7 @@ CONTEXTS.NORMALIZE()
 	
 	public function MVPartition($size,$nb)
 	{	       
-     //partitionne une requete, et renvoie le nombre de sous-contextes crées
+     //partitionne une requete, et renvoie le nombre de sous-contextes crï¿½es
      $this->s->Execute($this->session, 'CONTEXTS.PARTITION',$size,'1','0',$nb);
      $ctx = $this->s->KMResults [0]["results"][0][0]; 
      return $ctx ;
@@ -2497,8 +2503,8 @@ CONTEXTS.NORMALIZE()
 	
 		public function MVColorize()
 	{	
-     //evalue les activités du contexte 2 en fonction du contexte 1
-     //le nouveau contexte est laissé sur le pile
+     //evalue les activitï¿½s du contexte 2 en fonction du contexte 1
+     //le nouveau contexte est laissï¿½ sur le pile
      //pile -1
      
       $this->s->Execute($this->session, 'CONTEXTS.SWAP' );       // p
@@ -2522,10 +2528,10 @@ CONTEXTS.NORMALIZE()
 	
 		public function MVProp($seuilprop)
 	{	
-    //propagation dans le réseau sem  uniquement
+    //propagation dans le rï¿½seau sem  uniquement
     // prend le contexte, propage, et rend le differentiel de prop suivit du container
     // de propagation
-    // validée. qq fonctions API pour augmenter la précision, et gros gain en vitesse
+    // validï¿½e. qq fonctions API pour augmenter la prï¿½cision, et gros gain en vitesse
     
 
      $this->s->Execute($this->session, 'CONTEXTS.NEWFROMSEM','0',-1,'-1' );
@@ -2561,8 +2567,8 @@ CONTEXTS.NORMALIZE()
 	
 	public function MVGetSem($level)
 	{	
-    //propagation dans le réseau sem  uniquement
-    // validée. qq fonctions API pour augmenter la précision, et gros gain en vitesse
+    //propagation dans le rï¿½seau sem  uniquement
+    // validï¿½e. qq fonctions API pour augmenter la prï¿½cision, et gros gain en vitesse
     
      $stop = 0;
      $this->s->Execute($this->session, 'CONTEXTS.DUP' );
@@ -2661,7 +2667,7 @@ CONTEXTS.NORMALIZE()
     
 
 	 if(isset($_SESSION['genact']) && $_SESSION['genact'] == "gen"){  $this->s->Execute ($this->session, 'CONTEXTS.SortByGenerality','true','false' );}   
-    $this->s->Execute($this->session, 'CONTEXTS.GETELEMENTS' );   //on récupère le contexte en haut de la pile	
+    $this->s->Execute($this->session, 'CONTEXTS.GETELEMENTS' );   //on rï¿½cupï¿½re le contexte en haut de la pile	
 	  	 	  	  
 	  
    

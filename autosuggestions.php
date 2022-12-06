@@ -1,7 +1,7 @@
 <?php
-
+header('Content-Type: text/html; charset=ISO-8859-15'); 
 include_once "connectIKM.php";
-include_once "display.php";
+include_once "DisplayClass.php";
 session_start();
 
 if(isset($_SESSION["testglobal"])) $_SESSION["testglobal"]=$_SESSION["testglobal"]+1;
@@ -15,11 +15,12 @@ include "connectlang.php";
 
 // q recoit le contenu du champ de recherche "textsearch"
  $tmpsearch = utf8_decode($_GET['q']);
+ //var_dump($tmpsearch);
  
 
  $tabsearch = explode(" ", $tmpsearch); 
  $tabsearch = array_unique($tabsearch);
- $tmpsearch = implode($tabsearch , " ");
+ $tmpsearch = implode(" ",$tabsearch ); // implode($tabsearch, " " ); obsolete php 7.4
 // echo $tmpsearch;
  //echo " > ".$tabsearch[count($tabsearch)-1]." < ";
  $espace=false;
@@ -189,7 +190,7 @@ function display_simple($sikm)
 {
 	$ret = $sikm->readArrayKMserver();
 	//$ret_unique = array_unique($ret);
-	$display = new display($ret);
+	$display = new DisplayClass($ret);
 	$display->comma_elements();
 }
 
@@ -197,7 +198,7 @@ function display_getbestwords($ret)
 {
 	//$ret = $sikm->readArrayKMserver();
 	//$ret_unique = array_unique($ret);
-	$display = new display($ret);
+	$display = new DisplayClass($ret);
 	$display->getbestwords_elements();
 }
 

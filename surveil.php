@@ -1,7 +1,7 @@
 <?php
    
 //$sm = fopen ("sitemap.txt", "a+");
-
+return;
 //<url><loc>http://www.marvinbot.com/index.php?modepage=1&textboxsearch=rate%20agreement&lang=eng</loc></url>
 //http://178-33-107-41.ovh.net/IKM_PRJ/marvinajaxclean/articles.php?q=baleine&lang=fr&mode=1
 if(!isset($_GET['q'])) 
@@ -115,8 +115,8 @@ function urlrewriting($url)
 	$urlrewritting = trim(urldecode($urlrewritting));
 	$urlrewritting = str_replace("/ ", "/", $urlrewritting);
 	$urlrewritting = str_replace(" ", "_", $urlrewritting);
-	$urlrewritting = strtr($urlrewritting, 'ÁÀÂÄÃÅÇÉÈÊËÍÏÎÌÑÓÒÔÖÕÚÙÛÜİ', 'AAAAAACEEEEEIIIINOOOOOUUUUY');
-	$urlrewritting = strtr($urlrewritting, 'áàâäãåçéèêëíìîïñóòôöõúùûüıÿ', 'aaaaaaceeeeiiiinooooouuuuyy');	
+	$urlrewritting = strtr($urlrewritting, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'AAAAAACEEEEEIIIINOOOOOUUUUY');
+	$urlrewritting = strtr($urlrewritting, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'aaaaaaceeeeiiiinooooouuuuyy');	
 	
 	return $urlrewritting; 
 }

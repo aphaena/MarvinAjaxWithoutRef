@@ -1,7 +1,8 @@
 <?php
+header('Content-Type: text/html; charset=ISO-8859-15'); 
 
 include_once "connectIKM.php";
-include_once "display.php";
+include_once "DisplayClass.php";
  session_start();
 $sikm = new searchikm();
 //$sikm = unserialize($_SESSION["smarvin"]);
@@ -92,7 +93,7 @@ else { display_simple($sikm);}
 function display_simple($sikm)
 {
 	$ret = $sikm->readArrayKMserver();
-	$display = new display($ret);
+	$display = new DisplayClass($ret);
 
 	$display->horizontal_elements();
 }
@@ -100,7 +101,7 @@ function display_simple($sikm)
 function display_contexts($sikm)
 {
 	$ret = $sikm->readArrayKMResultsMultiContent();
-	$display = new display($ret);
+	$display = new DisplayClass($ret);
 	$display->aff_partition();	
 }
 
