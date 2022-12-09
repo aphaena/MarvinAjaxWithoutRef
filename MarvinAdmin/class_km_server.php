@@ -223,13 +223,18 @@
         $this->toSend ='';
     	$params = func_get_args();
         $numargs = func_num_args();
+		//correctif pour transmettre un tableau correct pour insert xb
+		if(is_array($params[0])==true ) 
+		{
+			$params = func_get_arg(0); 
+		}
         $idx = 0;
-        $str = (string) $params [$idx];
+        $str = (string) $params[$idx];
         //1er parametre = id de session ?        
         if (is_numeric($str) === true ) { $session = $str; $idx +=1;}
         else							{ $session = $this->KMId;}
         
-    	$function = (string) $params [$idx];
+    	$function = (string) $params[$idx];
     	$idx +=1;
     	$this->toSend = $session;
     	$this->toSend .= ' ';

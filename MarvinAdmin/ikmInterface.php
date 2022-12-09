@@ -2047,10 +2047,25 @@ class ikmInterface {
 	public function tableInsert( $_data, $_table="myMasterTable" )
 	{		
 	try {
-		$tabtmp = array( 1=> $this->session, 'TABLE:'.$_table.'.Insert');
-		$tabtmp2 = explode(";", $_data );
-		$result = array_merge((array)$tabtmp, (array)$tabtmp2);		
-		$this->ikm->Execute ($result);		
+		//$this->s->Execute ($this->session, ' table:'.$this->mastertable.'.insert','title',$title,'texte', $texte , 'link_wikifr',$link );
+		$str =	$this->session.", TABLE:".$_table.".Insert,".$_data;
+			
+		$tabtmp = array( $this->session, 'TABLE:'.$_table.'.Insert');
+		//$tabtmp = array( 1=> $this->session, 'TABLE:'.$_table.'.Insert');
+		$tabtmp2 = explode(",", $_data );		
+		//$result = $tabtmp+$tabtmp2;
+		$result = array_merge((array)$tabtmp, (array)$tabtmp2);
+			$result2 = array();
+			foreach($result as $element) {
+				array_push($result2, (string)$element); 
+			}
+
+			
+		var_dump($result2);	
+
+		$this->ikm->Execute ($result2);	
+		//$this->ikm->Execute ($this->session, 'TABLE:'.$_table.'.Insert', 'title', 'mon titre');	
+
 		return $this->ikm->KMResults;	  		  	 
 		}
 	catch (Exception $e) {

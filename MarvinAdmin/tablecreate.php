@@ -12,19 +12,41 @@ if(isset($_GET['fields'])) {$fields = $_GET['fields']; } else { $fields = "id IN
 
 $IP = "127.0.0.1";
 $port = "1254";
-$linked_knowledge = "knwtest2";
-$param1 = "title";
-$param2 = "text";
-$table = "table1";
+$linked_knowledge = "knwwiki";
+$param1 = "";
+$param2 = "";
+$table = "master";
 
-require_once "ikmInterface.php"; // class_km_server.php needed   
-$ikmInt = new ikmInterface;  
-$ikmInt->connect($IP,$port);  
-if( $ikmInt->KMServerGetisError()==true) {echo "connection error"; exit;}   
-$ikmInt->KMId();  
-try {
-$ikmInt->KnowledgeCreate($linked_knowledge); 
-$ikmInt->TableCreate($table, $linked_knowledge);
+    require_once "ikmInterface.php"; // class_km_server.php needed   
+    $ikmInt = new ikmInterface;  
+    $ikmInt->connect($IP,$port);  
+    if( $ikmInt->KMServerGetisError()==true) {echo "connection error"; exit;}   
+    $ikmInt->KMId();  
+    try {
+   
+    $ikmInt->KnowledgeCreate($linked_knowledge); 
+    //$ikmInt->TableCreate($table, $linked_knowledge);
+    $ikmInt->TableCreate($table, $linked_knowledge,
+    "",
+    "",
+    "Master",
+    "id INT64 ,
+    title STRING ,
+        text STRING ,
+        link STRING");
+
+    $ikmInt->tableBIndexCreate("id", true, $table);
+    $ikmInt->tableKIndexCreate("title", $table);
+    $ikmInt->tableKIndexCreate("text", $table);
+    
+    $results = $ikmInt->tableGetStructure(($table));
+    var_dump($results);
+    $results = $ikmInt->tableGetOwner($table);
+    var_dump($results);
+    //,text,qsd qsd qsdq sdqsdqsd,type,http://www.marvinbot.com
+   // $results = $ikmInt->tableInsert("title,titre1,text,mon texte, type, http://www.info.fr", $table);
+   // var_dump($results);
+
 $ikmInt->closeSession(); 
 }
 catch (Exception $e){
